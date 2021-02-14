@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { filter } from 'rxjs/internal/operators';
 import { languageNames } from '../../app-config';
 import { ConfigModel, LanguageModel, PageBaseModel } from '../../models';
-import { ConfigService, PageService } from '../../services';
+import { AuthService, ConfigService, PageService } from '../../services';
 
 /**
  * Nav Menu Component
@@ -36,6 +36,7 @@ export class NavMenuComponent implements OnInit {
         @Inject(LOCALE_ID) public locale: string,
         public router: Router,
         public pageService: PageService,
+        public authService: AuthService,
         public configService: ConfigService) {
     }
 

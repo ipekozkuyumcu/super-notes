@@ -28,13 +28,8 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
     }
-    match /feedItems/{document=**} {
-      allow read, update: if exists(/databases/$(database)/documents/users/$(request.auth.uid));
-      allow create, delete: if false;
-    }
-    match /feedItemsFull/{document=**} {
-      allow read: if exists(/databases/$(database)/documents/users/$(request.auth.uid));
-      allow create, update, delete: if false;
+    match /noteItems/{document=**} {
+      allow read, write: if exists(/databases/$(database)/documents/users/$(request.auth.uid));
     }
     match /tags/{document=**} {
       allow read, update: if exists(/databases/$(database)/documents/users/$(request.auth.uid));

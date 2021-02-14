@@ -3,7 +3,7 @@ import { Component, HostBinding, HostListener, Inject, LOCALE_ID, OnInit, PLATFO
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { FeedItemModel, PageModel, TaxonomyModel } from '../../models';
+import { NoteItemModel, PageModel, TaxonomyModel } from '../../models';
 import { AlertService, ComponentCanDeactivate, PageService, PaginationService } from '../../services';
 
 /**
@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
     /** current page object */
     page$: Observable<PageModel>;
     /** focused feed item */
-    focusedItem: FeedItemModel;
+    focusedItem: NoteItemModel;
     /** focused tag */
     focusedTag: TaxonomyModel;
     /** tag list */
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
     ngOnInit(): void {
         this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', this.pageService.getRoutePathName());
         this.loadTags();
-        this.loadByTag({id: 'asap'});
+        this.loadByTag({id: 'all'});
     }
 
     // @HostListener allows us to also guard against browser refresh, close, etc.
@@ -74,24 +74,24 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
                 this.tagList = tagList;
                 this.tagList.forEach(tag => {
                     if (tag.id === 'all') {
-                        this.afs.collection<FeedItemModel>('feedItems', ref =>
+                        this.afs.collection<NoteItemModel>('noteItems', ref =>
                             ref
-                                .where('isRead', '<=', false)
-                                .orderBy('isRead', 'asc')
-                                .orderBy('date', 'asc')
+                                .where('isArchived', '<=', false)
+                                .orderBy('isArchived', 'asc')
+                                .orderBy('createdAt', 'asc')
                                 .limit(10))
                             .valueChanges()
                             .subscribe(value => {
                                 tag.countOfUnreadText = value.length > 9 ? `${value.length}+` : `${value.length}`;
                             });
                     } else {
-                        this.afs.collection<FeedItemModel>('feedItems', ref =>
+                        this.afs.collection<NoteItemModel>('noteItems', ref =>
                             ref
-                                .where('isRead', '<=', false)
+                                .where('isArchived', '<=', false)
                                 .where('tags', 'array-contains', tag.id)
-                                .orderBy('isRead', 'asc')
+                                .orderBy('isArchived', 'asc')
                                 .orderBy('tags', 'asc')
-                                .orderBy('date', 'asc')
+                                .orderBy('createdAt', 'asc')
                                 .limit(10)
                         )
                             .valueChanges()
@@ -111,15 +111,15 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
         this.focusedTag = tag;
         if (tag.id === 'all') {
             this.pagination.init(
-                'feedItems', ['isRead', 'date'], {limit: 10, reverse: false, prepend: false}, undefined,
+                'noteItems', ['isArchived', 'createdAt'], {limit: 10, reverse: false, prepend: false}, undefined,
                 {
-                    fieldPath: 'isRead', opStr: '<=', value: false
+                    fieldPath: 'isArchived', opStr: '<=', value: false
                 });
         } else {
             this.pagination.init(
-                'feedItems', ['isRead', 'tags', 'date'], {limit: 10, reverse: false, prepend: false}, undefined,
+                'noteItems', ['isArchived', 'tags', 'createdAt'], {limit: 10, reverse: false, prepend: false}, undefined,
                 {
-                    fieldPath: 'isRead', opStr: '<=', value: false
+                    fieldPath: 'isArchived', opStr: '<=', value: false
                 },
                 {
                     fieldPath: 'tags', opStr: 'array-contains', value: tag.id
@@ -152,17 +152,17 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
 
     /**
      * update feed item
-     * @param feedItem: FeedItemModel
+     * @param noteItem: FeedItemModel
      * @param newData: FeedItemModel
      */
-    updateFeedItem(feedItem: FeedItemModel, newData: FeedItemModel): void {
-        this.afs.collection('feedItems')
-            .doc(feedItem.id)
+    updateFeedItem(noteItem: NoteItemModel, newData: NoteItemModel): void {
+        this.afs.collection('noteItems')
+            .doc(noteItem.id)
             .set(newData, {merge: true})
             .then(value => {
                 Object.keys(newData)
                     .forEach(key => {
-                        feedItem[key] = newData[key];
+                        noteItem[key] = newData[key];
                     });
             })
             .catch(reason => {
@@ -171,30 +171,12 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
     }
 
     /**
-     * load full content of feed item
-     * @param feedItem: FeedItemModel
-     */
-    loadFullContent(feedItem: FeedItemModel): void {
-        this.afs.collection('feedItemsFull')
-            .doc(feedItem.id)
-            .get() // .get({source: 'server'}) // to disable cache
-            .subscribe(value => {
-                if (value.exists) {
-                    feedItem.fullContent = value.data().fullContent;
-                } else {
-                    this.alert.error('There is no full content for this feed item.');
-                }
-            });
-    }
-
-    /**
      * show feed item preview
-     * @param feedItem: FeedItemModel
+     * @param noteItem: FeedItemModel
      */
-    showPreview(feedItem: FeedItemModel, force?: boolean): void {
-        if (!this.focusedItem || (this.focusedItem.link !== feedItem.link && (!this.focusedItem.fullContent || force))) {
-            this.updateFeedItem(feedItem, {isRead: true});
-            this.focusedItem = feedItem;
+    showPreview(noteItem: NoteItemModel, force?: boolean): void {
+        if (!this.focusedItem) {
+            this.focusedItem = noteItem;
             this.focusedItem.tagList = this.tagList.filter(tag => this.focusedItem.tags.indexOf(tag.id) > -1);
             if (isPlatformBrowser(this.platformId)) {
                 const scrollToTop = window.setInterval(() => {
