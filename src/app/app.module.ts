@@ -28,6 +28,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { NoteComponent } from './pages/note/note.component';
 import { PlaygroundComponent } from './pages/playground/playground.component';
 import {
     AlertService, AuthService, CarouselService, ConfigService, JsonLDService,
@@ -52,7 +53,8 @@ import { CustomHtmlComponent } from './widgets/custom-html/custom-html.component
         CarouselComponent,
         CustomHtmlComponent,
         ContactComponent,
-        DashboardComponent
+        DashboardComponent,
+        NoteComponent
     ],
     imports: [
         CommonModule,

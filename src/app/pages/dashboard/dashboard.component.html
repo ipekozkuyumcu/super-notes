@@ -4,6 +4,13 @@
         <div class="card mb-2">
             <div class="card-body pt-1 pb-0">
                 <div class="row">
+                    <a [routerLink]="['/note']" class="btn btn-primary" i18n>Create</a>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-2">
+            <div class="card-body pt-1 pb-0">
+                <div class="row">
                     <div [ngClass]="tagCloudClass" (mouseover)="tagCloudClass='tag-cloud tag-cloud-hover'" (mouseout)="tagCloudClass='tag-cloud'">
                         <ul>
                             <li [ngClass]="[tag?.id == focusedTag?.id ? 'active' : '']" *ngFor="let tag of tagList; trackBy:pageService.trackByIndex">

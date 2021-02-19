@@ -1,0 +1,48 @@
+<div class="row" *ngIf="page$ | async as page">
+    <div class="col-md-12">
+        <div class="card py-1 px-3 mt-3">
+            <h1>{{ page?.caption }}</h1>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+
+    <div class="col-md-8">
+        <div class="card my-4">
+            <form #f="ngForm" novalidate>
+                <img class="card-img-top" *ngIf="page.image" [src]="page.image.src" alt="{{ page.image.alt }}"/>
+                <div class="card-body row">
+                    <p class="card-text" [innerHTML]="page.content"></p>
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <input type="text" [(ngModel)]="noteItem.title" name="title" class="form-control"
+                                       #title="ngModel"
+                                       placeholder="You can enter title" i18n-placeholder
+                                />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <textarea class="form-control" [(ngModel)]="noteItem.content" name="content"
+                                       #content="ngModel"
+                                       placeholder="You can type your note here" i18n-placeholder
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button type="button" class="btn btn-success" (click)="onClickSave()" i18n>Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Sidebar Widgets Column -->
+    <aside class="col-md-4">
+        <app-side-bar></app-side-bar>
+    </aside>
+</div>
