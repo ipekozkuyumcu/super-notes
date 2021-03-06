@@ -211,3 +211,31 @@ body {
   bottom: 10px !important;
   width: 280px !important;
 }
+
+/* Deck with max 4 columns */
+
+@media (min-width: 0) {
+  .card-deck-4 .card {
+    flex: 0 0 calc(100% - 30px);
+  }
+}
+
+@media (min-width: 576px) {
+  .card-deck-4 .card {
+    flex: 0 0 calc(50% - 30px);
+  }
+}
+
+@media (min-width: 768px) {
+  .card-deck-4 .card {
+    flex: 0 0 calc(33.3333333333% - 30px);
+  }
+}
+
+@media (min-width: 992px) {
+  .card-deck-4 .card {
+    flex: 0 0 calc(25% - 30px);
+  }
+}
+
+/* endregion */

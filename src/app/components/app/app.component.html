@@ -14,7 +14,7 @@
 <app-carousel></app-carousel>
 
 <!-- Page Content -->
-<main class="container">
+<main [ngClass]="[containerClass]">
     <!-- /.row -->
     <div *ngIf="httpStatus$ | async as httpStatus; else defaultRouter">
         <app-not-found *ngIf="httpStatus.code === 404"></app-not-found>

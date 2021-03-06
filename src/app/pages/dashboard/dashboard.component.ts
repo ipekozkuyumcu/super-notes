@@ -174,22 +174,9 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
      * show feed item preview
      * @param noteItem: FeedItemModel
      */
-    showPreview(noteItem: NoteItemModel, force?: boolean): void {
-        if (!this.focusedItem) {
-            this.focusedItem = noteItem;
-            this.focusedItem.tagList = this.tagList.filter(tag => this.focusedItem.tags.indexOf(tag.id) > -1);
-            if (isPlatformBrowser(this.platformId)) {
-                const scrollToTop = window.setInterval(() => {
-                    const pos = document.getElementById('focused-item-body').scrollTop;
-                    if (pos > 0) {
-                        document.getElementById('focused-item-body')
-                            .scrollTo(0, pos - 60); // how far to scroll on each step
-                    } else {
-                        window.clearInterval(scrollToTop);
-                    }
-                }, 16);
-            }
-        }
+    showPreview(noteItem: NoteItemModel): void {
+        this.focusedItem = noteItem;
+        this.focusedItem.tagList = this.tagList.filter(tag => this.focusedItem.tags.indexOf(tag.id) > -1);
     }
 
     /**

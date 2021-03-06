@@ -1,9 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID, Renderer2, ViewChild } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Angulartics2GoogleGlobalSiteTag } from 'angulartics2/gst';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/internal/operators';
 import { ConfigModel, HttpStatusModel, PageBaseModel } from '../../models';
 import { AlertService, ConfigService, JsonLDService, PageService, PaginationService, SeoService } from '../../services';
 
@@ -21,6 +22,12 @@ export class AppComponent implements OnInit {
     jsonLD$: Observable<SafeHtml>;
     /** do you want to show footer? */
     isShowFooter = true;
+    /** current container class */
+    containerClass = 'container';
+    /** full pages name list */
+    fullPages = [
+        '/dashboard'
+    ];
 
     /** cookieLaw element */
     @ViewChild('cookieLaw', { static: false }) cookieLawEl: any;
@@ -64,6 +71,12 @@ export class AppComponent implements OnInit {
      * ngOnInit
      */
     ngOnInit(): void {
+        this.router.events
+            .pipe(filter(event => event instanceof NavigationEnd))
+            .subscribe((event: NavigationEnd) => {
+                this.containerClass = this.fullPages.indexOf(event.url) > -1 ? 'container-fluid' : 'container';
+            });
+
         this.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${this.locale}`)
             .subscribe(config => {
                 if (!config.configSEO) {
