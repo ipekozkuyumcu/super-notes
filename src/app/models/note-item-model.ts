@@ -6,6 +6,8 @@ import { TaxonomyModel } from './taxonomy-model';
 export class NoteItemModel {
     /** firestore id */
     id?: string;
+    /** firestore doc */
+    doc?: any;
     /** user ID */
     userID?: string;
     /** title */

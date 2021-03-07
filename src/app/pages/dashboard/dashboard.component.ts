@@ -1,5 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, HostBinding, HostListener, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
+import {
+    Component,
+    HostBinding,
+    HostListener,
+    Inject,
+    LOCALE_ID,
+    OnInit,
+    PLATFORM_ID
+} from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -25,10 +33,10 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
     focusedTag: TaxonomyModel;
     /** tag list */
     tagList: Array<TaxonomyModel>;
-    /** scroll interval */
-    scrollInterval: any;
     /** css class of tag-cloud */
     tagCloudClass = 'tag-cloud';
+    /** show modal */
+    showModal = false;
 
     /**
      * constructor of DashboardComponent
@@ -111,13 +119,13 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
         this.focusedTag = tag;
         if (tag.id === 'all') {
             this.pagination.init(
-                'noteItems', ['isArchived', 'createdAt'], {limit: 10, reverse: false, prepend: false}, undefined,
+                'noteItems', ['isArchived', 'createdAt'], {limit: 100, reverse: false, prepend: false}, undefined,
                 {
                     fieldPath: 'isArchived', opStr: '<=', value: false
                 });
         } else {
             this.pagination.init(
-                'noteItems', ['isArchived', 'tags', 'createdAt'], {limit: 10, reverse: false, prepend: false}, undefined,
+                'noteItems', ['isArchived', 'tags', 'createdAt'], {limit: 100, reverse: false, prepend: false}, undefined,
                 {
                     fieldPath: 'isArchived', opStr: '<=', value: false
                 },
@@ -151,59 +159,23 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
     }
 
     /**
-     * update feed item
-     * @param noteItem: FeedItemModel
-     * @param newData: FeedItemModel
-     */
-    updateFeedItem(noteItem: NoteItemModel, newData: NoteItemModel): void {
-        this.afs.collection('noteItems')
-            .doc(noteItem.id)
-            .set(newData, {merge: true})
-            .then(value => {
-                Object.keys(newData)
-                    .forEach(key => {
-                        noteItem[key] = newData[key];
-                    });
-            })
-            .catch(reason => {
-                this.alert.error(reason);
-            });
-    }
-
-    /**
      * show feed item preview
      * @param noteItem: FeedItemModel
      */
     showPreview(noteItem: NoteItemModel): void {
+        this.showModal = true;
         this.focusedItem = noteItem;
         this.focusedItem.tagList = this.tagList.filter(tag => this.focusedItem.tags.indexOf(tag.id) > -1);
     }
 
     /**
-     * scroll up or down content
-     * @param factor: scroll factor
+     * on get an event
+     * @param e: emitted event
      */
-    scrollContent(factor: number): void {
-        if (isPlatformBrowser(this.platformId)) {
-            this.scrollInterval = window.setInterval(() => {
-                const pos = document.getElementById('focused-item-body').scrollTop;
-                const scrollHeight = document.getElementById('focused-item-body').scrollHeight;
-                if (pos > -1 && pos < scrollHeight) {
-                    document.getElementById('focused-item-body')
-                        .scrollTo(0, pos + (factor)); // how far to scroll on each step
-                } else {
-                    window.clearInterval(this.scrollInterval);
-                }
-            }, 10);
-        }
-    }
-
-    /**
-     * stop scroll up or down content
-     */
-    stopScrollContent(): void {
-        if (isPlatformBrowser(this.platformId) && this.scrollInterval) {
-            window.clearInterval(this.scrollInterval);
+    onEventListener(e: any): void {
+        if (e === 'close') {
+            this.showModal = false;
+            // TODO: reload data
         }
     }
 

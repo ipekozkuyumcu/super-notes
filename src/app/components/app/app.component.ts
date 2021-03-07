@@ -74,7 +74,9 @@ export class AppComponent implements OnInit {
         this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
-                this.containerClass = this.fullPages.indexOf(event.url) > -1 ? 'container-fluid' : 'container';
+                this.containerClass = this.fullPages.filter(
+                    value => event.url.indexOf(value) > -1
+                ).length > 0 ? 'container-fluid' : 'container';
             });
 
         this.pageService.getDocumentFromFirestore(ConfigModel, `configs/public_${this.locale}`)

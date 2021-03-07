@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, LOCALE_ID, NgZone, Renderer2, RendererFactory2 } from '@angular/core';
 import { AngularFirestore, QueryFn } from '@angular/fire/firestore';
-import { ParamMap, Router } from '@angular/router';
+import { NavigationExtras, ParamMap, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { startWith, tap } from 'rxjs/operators';
 import { PageBaseModel } from '../models';
@@ -235,6 +235,19 @@ export class PageService {
                     this.seo.http404();
                 }
             });
+    }
+
+    /**
+     * go to page
+     * @param commands: Array<string>
+     * @param extras: NavigationExtras
+     */
+    navigate(commands: Array<string>, extras?: NavigationExtras): void {
+        this.router.navigate(commands, extras)
+            .catch(// istanbul ignore next
+                reason => {
+                    this.alert.error(reason);
+                });
     }
 
 }

@@ -1,9 +1,8 @@
-import { Component, Inject, LOCALE_ID, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, LOCALE_ID, Output, PLATFORM_ID } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs';
-import { NoteItemModel, PageModel } from '../../models';
+import { NoteItemModel } from '../../models';
 import { AlertService, PageService } from '../../services';
 
 /**
@@ -13,11 +12,11 @@ import { AlertService, PageService } from '../../services';
     selector: 'app-note',
     templateUrl: './note.component.html'
 })
-export class NoteComponent implements OnInit {
-    /** current page object */
-    page$: Observable<PageModel>;
+export class NoteComponent {
+    /** event emitter */
+    @Output() readonly eventEmitter = new EventEmitter();
     /** current note data */
-    noteItem: NoteItemModel = {};
+    @Input() noteItem: NoteItemModel = {};
 
     /**
      * constructor of DashboardComponent
@@ -37,13 +36,6 @@ export class NoteComponent implements OnInit {
     }
 
     /**
-     * ngOnInit
-     */
-    ngOnInit(): void {
-        this.page$ = this.pageService.getPageFromFirestore(PageModel, 'pages', this.pageService.getRoutePathName());
-    }
-
-    /**
      * on click save button
      */
     onClickSave(): void {
@@ -53,12 +45,47 @@ export class NoteComponent implements OnInit {
         }
         this.noteItem.updatedAt = firebase.firestore.Timestamp.now();
 
-        this.afs.collection('noteItems')
-            .add(this.noteItem)
-            .then(value => this.router.navigate(['/dashboard']))
-            .catch(// istanbul ignore next
-                reason => {
-                this.alert.error(reason);
+        const newNote = {...this.noteItem};
+        delete newNote.doc;
+        delete newNote.id;
+        if (this.noteItem.id) {
+            this.afs.collection('noteItems')
+                .doc(this.noteItem.id)
+                .set(newNote, {merge: true})
+                .then(() => {
+                    // no need to show info
+                })
+                .catch(reason => {
+                    this.alert.error(reason);
+                });
+        } else {
+            this.afs.collection('noteItems')
+                .add(newNote)
+                .then(() => {
+                    // no need to show info
+                })
+                .catch(reason => {
+                    this.alert.error(reason);
+                });
+        }
+    }
+
+    /**
+     * update note item
+     * @param newData: FeedItemModel
+     */
+    updateNoteItem(newData: NoteItemModel): void {
+        Object.keys(newData)
+            .forEach(key => {
+                this.noteItem[key] = newData[key];
             });
+        this.onClickSave();
+    }
+
+    /**
+     * on click close
+     */
+    onClickClose(): void {
+        this.eventEmitter.emit('close');
     }
 }
