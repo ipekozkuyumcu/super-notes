@@ -11,17 +11,17 @@
                     <div class="float-right">
                         <button class="btn ml-3 mt-1 btn-sm" *ngIf="noteItem.isArchived"
                                 (click)="updateNoteItem({isArchived: false})"
-                                title="Mark As Unread"><i class="far fa-fw fa-registered fa-lg"></i></button>
+                                title="Undo Archive"><i class="far fa-fw fa-file-archive fa-lg"></i></button>
                         <button class="btn ml-3 mt-1 btn-sm" *ngIf="!noteItem.isArchived"
                                 (click)="updateNoteItem({isArchived: true})"
-                                title="Mark As Read"><i class="fas fa-fw fa-registered fa-lg"></i></button>
+                                title="Archive"><i class="fas fa-fw fa-file-archive fa-lg"></i></button>
 
-                        <button class="btn ml-3 mt-1 btn-sm" *ngIf="noteItem.isArchived"
-                                (click)="updateNoteItem({isArchived: false})"
-                                title="Mark Me To Be Deleted"><i class="fas fa-fw fa-save fa-lg"></i></button>
-                        <button class="btn ml-3 mt-1 btn-sm" *ngIf="!noteItem.isArchived"
-                                (click)="updateNoteItem({isArchived: true})"
-                                title="Keep Me Forever"><i class="far fa-fw fa-save fa-lg"></i></button>
+                        <button class="btn ml-3 mt-1 btn-sm" *ngIf="noteItem.isSticky"
+                                (click)="updateNoteItem({isSticky: false})"
+                                title="Undo Pinned Note"><i class="fas fa-fw fa-map-marker fa-lg"></i></button>
+                        <button class="btn ml-3 mt-1 btn-sm" *ngIf="!noteItem.isSticky"
+                                (click)="updateNoteItem({isSticky: true})"
+                                title="Pin Note"><i class="fas fa-fw fa-map-marker-alt fa-lg"></i></button>
 
                         <button class="btn ml-3 mt-1 btn-sm text-danger"
                                 (click)="onClickClose()"

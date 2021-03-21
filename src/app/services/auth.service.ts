@@ -46,6 +46,11 @@ export class AuthService {
                 return of(undefined);
             })
         );
+        this.user$.subscribe(async (value): Promise<any> => {
+            if (value) {
+                return this.router.navigate(['/dashboard']);
+            }
+        });
     }
 
     /**

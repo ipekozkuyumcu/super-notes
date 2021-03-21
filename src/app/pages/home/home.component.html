@@ -47,7 +47,7 @@
                                     <div class="col-md-8">
                                         <input type="password" [(ngModel)]="loginData.password" name="password"
                                                #password="ngModel" [ngClass]="['form-control', password.touched ? password.valid ? 'is-valid' : 'is-invalid' : '']"
-                                               required maxlength="255" autocomplete="off" />
+                                               required maxlength="255" autocomplete="off" (keyup.enter)="auth.emailAndPasswordSignIn(loginData.email, loginData.password)" />
                                         <div class="invalid-feedback" i18n>
                                             Please enter your password
                                         </div>

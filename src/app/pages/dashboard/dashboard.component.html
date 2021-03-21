@@ -28,13 +28,13 @@
 
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-notes-tab" data-toggle="tab" href="#nav-notes" role="tab" aria-controls="nav-notes" aria-selected="true" i18n>My Notes</a>
-            <a class="nav-item nav-link" id="nav-archive-tab" data-toggle="tab" href="#nav-archive" role="tab" aria-controls="nav-archive" aria-selected="false" i18n>Archive</a>
-            <a class="nav-item nav-link" id="nav-recycle-tab" data-toggle="tab" href="#nav-recycle" role="tab" aria-controls="nav-recycle" aria-selected="false" i18n>Recycled Notes</a>
+            <a [ngClass]="['nav-item nav-link', pageType == 'default' ? 'active' : '']" (click)="onClickSetPageType('default')" i18n>My Notes</a>
+            <a [ngClass]="['nav-item nav-link', pageType == 'archive' ? 'active' : '']"  (click)="onClickSetPageType('archive')" i18n>Archive</a>
+            <a [ngClass]="['nav-item nav-link', pageType == 'recycle' ? 'active' : '']"  (click)="onClickSetPageType('recycle')" i18n>Recycled Notes</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tab-content">
-        <div class="tab-pane fade show active border border-top-0 p-2 py-4" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
+        <div class="tab-pane fade show active border border-top-0 p-2 py-4">
             <div class="card-deck card-deck-4 text-center" appScrollable (scrollPosition)="scrollHandler($event)">
                 <div [ngClass]="['card mb-4 flex-row flex-wrap', noteItem.isArchived ? 'text-muted' : 'text-dark border-dark']" *ngFor="let noteItem of pagination.data | async; trackBy:pageService.trackByIndex"
                      (click)="showPreview(noteItem)">
@@ -53,8 +53,6 @@
                 <p class="alert-warning" *ngIf="pagination.done | async" i18n>We ran out of items!</p>
             </div>
         </div>
-        <div class="tab-pane fade" id="nav-archive" role="tabpanel" aria-labelledby="nav-archive-tab" i18n>...</div>
-        <div class="tab-pane fade" id="nav-recycle" role="tabpanel" aria-labelledby="nav-recycle-tab" i18n>...</div>
     </div>
 
     <app-note [noteItem]="focusedItem" (eventEmitter)="onEventListener($event)" *ngIf="showModal" ></app-note>

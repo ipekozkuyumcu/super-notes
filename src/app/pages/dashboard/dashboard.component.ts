@@ -37,6 +37,8 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
     tagCloudClass = 'tag-cloud';
     /** show modal */
     showModal = false;
+    /** page type */
+    pageType: 'default' | 'archive' | 'recycle' = 'default';
 
     /**
      * constructor of DashboardComponent
@@ -121,13 +123,13 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
             this.pagination.init(
                 'noteItems', ['isArchived', 'createdAt'], {limit: 100, reverse: false, prepend: false}, undefined,
                 {
-                    fieldPath: 'isArchived', opStr: '<=', value: false
+                    fieldPath: 'isArchived', opStr: '>=', value: this.pageType === 'archive' // TODO: use =
                 });
         } else {
             this.pagination.init(
                 'noteItems', ['isArchived', 'tags', 'createdAt'], {limit: 100, reverse: false, prepend: false}, undefined,
                 {
-                    fieldPath: 'isArchived', opStr: '<=', value: false
+                    fieldPath: 'isArchived', opStr: '>=', value: this.pageType === 'archive' // TODO: use =
                 },
                 {
                     fieldPath: 'tags', opStr: 'array-contains', value: tag.id
@@ -177,6 +179,14 @@ export class DashboardComponent implements OnInit, ComponentCanDeactivate  {
             this.showModal = false;
             // TODO: reload data
         }
+    }
+
+    /**
+     * on click page type
+     */
+    onClickSetPageType(pageType: 'default' | 'archive' | 'recycle'): void {
+        this.pageType = pageType;
+        this.loadByTag({id: 'all'});
     }
 
 }
