@@ -4,3 +4,7 @@ My personal opensource note-taking web application for developers using Firebase
 
 Demo user for this application will be active soon! 
 
+This project is implemented with the help of my team from Koza Yazılım, where I am working as an intern. 
+
+Collabarator:
+Murat Demir (
