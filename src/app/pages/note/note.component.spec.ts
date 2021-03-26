@@ -41,22 +41,4 @@ describe('NoteComponent', () => {
             .toBeTruthy();
     }));
 
-    it('should send a new message', fakeAsync(() => {
-        comp.contact = {
-            userLongName: 'New Unit Test',
-            email: 'new@test.com',
-            message: 'This is for new test!',
-            isSendCopyToOwner: true,
-            isAgreed: true
-        };
-        comp.onClickSend();
-        tick();
-        fixture.detectChanges();
-
-        expect(comp.isShowThankYou)
-            .toBeTruthy();
-        expect(comp.contact)
-            .toEqual({});
-    }));
-
 });

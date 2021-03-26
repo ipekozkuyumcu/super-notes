@@ -200,7 +200,7 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit><trans-unit id="a2ccfcd0e074358f0255ea297eaaebe88cc68a61" datatype="html">
-        <source>Super Notes</source><target state="new"/>
+        <source>Super Notes</source><target state="translated">Süper Notlar</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
           <context context-type="linenumber">3</context>
@@ -209,10 +209,16 @@
       <trans-unit id="eb98135e35af26a9a326ee69bd8ff104d36dd8ec" datatype="html">
         <source>(current)</source><target state="final">(şimdiki)</target>
 
-      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit><trans-unit id="08019d56939ecb503fc298e8ea83f1acad44da4f" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">13</context></context-group></trans-unit><trans-unit id="d0227a069d21cc5c6951d829cbf135be5b5bc767" datatype="html">
+        <source>Log Out</source><target state="translated">Çıkış Yap</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit><trans-unit id="08019d56939ecb503fc298e8ea83f1acad44da4f" datatype="html">
         <source> (Home)</source><target state="translated"> (Anasayfa)</target>
 
-      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">20</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">app/components/nav-menu/nav-menu.component.html</context><context context-type="linenumber">25</context></context-group></trans-unit>
       <trans-unit id="ae51d565bb8279d1b9f6f74d534b076d267009e5" datatype="html">
         <source>Page not found</source><target state="final">Sayfa bulunamadı</target>
 
@@ -276,7 +282,7 @@
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit><trans-unit id="8ff8b4c64347d660237dbd84636572e4c09ee173" datatype="html">
-        <source>İpek Özkuyumcu</source><target state="new"/>
+        <source>İpek Özkuyumcu</source><target state="translated">İpek Özkuyumcu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
           <context context-type="linenumber">22</context>
@@ -387,11 +393,50 @@
           <context context-type="sourcefile">app/pages/contact/contact.component.html</context>
           <context context-type="linenumber">107</context>
         </context-group>
-      </trans-unit><trans-unit id="cf6678af080747bcd914e58c48e91290531f8402" datatype="html">
-        <source>We ran out of items!</source><target state="translated">Başka madde kalmadı!</target>
+      </trans-unit><trans-unit id="70a67e04629f6d412db0a12d51820b480788d795" datatype="html">
+        <source>Create</source><target state="translated">Oluştur</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit><trans-unit id="3ad8d5b19f8e92188e26d7637320b4adf08351b0" datatype="html">
+        <source>My Notes</source><target state="translated">Notlarım</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit><trans-unit id="22c9be90eb27c5c613348fbb621792223afe5d1b" datatype="html">
+        <source>Archive</source><target state="translated">Arşiv</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit><trans-unit id="952314f9937c29bf841b27ac2100f75cb14ee27d" datatype="html">
+        <source>Recycled Notes</source><target state="translated">Geri Dönüşüm Kutusu</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/pages/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit><trans-unit id="cf6678af080747bcd914e58c48e91290531f8402" datatype="html">
+        <source>We ran out of items!</source><target state="translated">Başka madde kalmadı!</target>
+        
+      <context-group purpose="location"><context context-type="sourcefile">app/pages/dashboard/dashboard.component.html</context><context context-type="linenumber">53</context></context-group></trans-unit><trans-unit id="4bd2d9a7f53bec42069c4446da8fbf18c6998631" datatype="html">
+        <source>You can enter title</source><target state="translated">Başlığınızı buraya girebilirsiniz</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/note/note.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit><trans-unit id="6a03fcc6d4bd3fb631c17164552afa32f2dbc16c" datatype="html">
+        <source>You can type your note here</source><target state="translated">Notunuzu buraya girebilirsiniz</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/note/note.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit><trans-unit id="52c9a103b812f258bcddc3d90a6e3f46871d25fe" datatype="html">
+        <source>Save</source><target state="translated">Kaydet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/pages/note/note.component.html</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit><trans-unit id="680d5c75b7fd8d37961083608b9fcdc4167b4c43" datatype="html">
         <source>Previous</source><target state="translated">Önceki</target>
@@ -476,7 +521,7 @@
 
 
       <context-group purpose="location"><context context-type="sourcefile">app/pages/playground/playground.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="5ee5c9440fbcd8715d89922691c5cf23156fe303" datatype="html">
-        <source>Copyright © Super Notes 2021</source><target state="new"/>
+        <source>Copyright © Super Notes 2021</source><target state="translated">Copyright © Super Notes 2021</target>
         <context-group purpose="location">
           <context context-type="sourcefile">app/components/footer/footer.component.html</context>
           <context context-type="linenumber">31</context>
