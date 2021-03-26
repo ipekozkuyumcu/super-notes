@@ -4,6 +4,8 @@ My personal opensource note-taking web application for developers using Firebase
 
 Demo user for this application will be active soon! 
 
+Notes can be arcived, or recycled. They can be highlighted if important, or seperated into groups using the tagging system. 
+
 This project is implemented with the help of my team from Koza Yazılım, where I am working as an intern. 
 
 Collaborator:
