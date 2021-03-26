@@ -6,5 +6,5 @@ Demo user for this application will be active soon!
 
 This project is implemented with the help of my team from Koza Yazılım, where I am working as an intern. 
 
-Collabarator:
-Murat Demir (
+Collaborator:
+Murat Demir (https://github.com/supermurat)
